@@ -23,11 +23,37 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ja">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <header className="text-gray-600 body-font border border-gray-200">
+          <div className="flex flex-wrap p-2 md:p-4 flex-col md:flex-row items-center bg-[url('./OpenCalendar.svg')] bg-[left_-3em_top_120%] md:bg-[left_-2em_top_50%] bg-[length:15em] md:bg-[length:20em] bg-no-repeat">
+            <h1>
+              <a className="flex title-font font-bold items-center text-gray-900 mb-2">
+                <span className="md:ml-3 text-2xl">OpenCalendar</span>
+              </a>
+            </h1>
+            <nav className="md:ml-auto my-0 flex flex-wrap items-coenter text-base justify-center">
+              <ul className="flex font-bold">
+                <li className="mr-10">
+                  <a href="" className="b hover:text-gray-900">
+                    ログイン
+                  </a>
+                </li>
+                <li className="mr-0 md:mr-10">
+                  <a href="" className="hover:text-gray-900">
+                    設定
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </header>
         {children}
+        <footer className="bg-blue-400 text-center py-8">
+          <p>copyright</p>
+        </footer>
       </body>
     </html>
   );
