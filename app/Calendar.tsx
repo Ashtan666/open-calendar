@@ -2,8 +2,8 @@
 
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import events from "./events";
 
-const events = [{ title: "Meeting", start: new Date() }];
 export default function Calendar() {
   return (
     <div className="p-4">
@@ -23,8 +23,8 @@ export default function Calendar() {
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
         weekends={true}
+        // events="https://fullcalendar.io/api/demo-feeds/events.json"
         events={events}
-        eventColor="red"
         // eventContent={renderEventContent}
         height="auto"
       />
