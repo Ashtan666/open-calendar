@@ -2,7 +2,7 @@ import Calendar from "./Calendar";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between bg-gray-50">
+    <main className="flex min-h-screen flex-col items-center justify-start bg-gray-50">
       <div className="flex flex-col text-center mx-auto md:mt-4 mt-2 border border-gray-300 py-2 px-3 text-sm md:text-base bg-white">
         <h2 className="pb-1 text-red-600 font-medium text-base md:text-lg">
           📍OpenCalendarとは
