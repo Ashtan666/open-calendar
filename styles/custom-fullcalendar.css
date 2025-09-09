@@ -1,0 +1,41 @@
+:root {
+  --fc-button-bg-color: #ededed;
+  --fc-button-border-color: #ededed;
+  --fc-button-text-color: #7b7b7b;
+  --fc-button-active-bg-color: #ffffff;
+  --fc-button-active-border-color: transparent;
+  --fc-button-active-text-color: #4f4f4f;
+  --fc-button-group-background-color: #ededed;
+}
+
+.fc .fc-toolbar-title {
+  font-weight: bold;
+}
+
+.fc .fc-daygrid-day-frame {
+  background-color: white;
+}
+
+.fc .fc-button {
+  border-radius: 0.3em;
+  padding: 0.2em 1em;
+}
+
+.fc-direction-ltr .fc-toolbar-chunk > .fc-button-group {
+  border-radius: 0.25em;
+  background-color: var(--fc-button-group-background-color);
+}
+
+.fc-button-group .fc-button.fc-button-primary {
+  background-color: transparent;
+  margin: 0.2em;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-button-primary:not(:disabled):active {
+  background-color: var(--fc-button-active-bg-color);
+  border-color: var(--fc-button-active-border-color);
+  color: var(--fc-button-text-color);
+  border-radius: 0.5em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
