@@ -11,29 +11,43 @@
   --fc-button-group-background-color: #ededed;
 }
 
-/* Calendar cell style */
-.fc .fc-daygrid-day-frame {
-  background-color: white;
-}
+/* ====- Toolbar ===== */
+/* === Common === */
+/* Chunk Layout */
+.fc {
+  & .fc-toolbar-chunk {
+    flex: 1;
 
-/* Calendar Title */
+    &:nth-child(1) {
+      text-align: left;
+    }
+    &:nth-child(2) {
+      text-align: center;
+    }
+    &:nth-child(3) {
+      text-align: right;
+    }
+  }
+}
+/* === Title === */
+/* Title */
 .fc .fc-toolbar-title {
   font-weight: bold;
 }
 
-/* ===== Button Common ===== */
+/* === Button Common === */
 /* Common style */
 .fc .fc-button {
   border-radius: 0.3em;
   padding: 0.2em 1em;
 }
 /* Button group */
-.fc-direction-ltr .fc-toolbar-chunk > .fc-button-group {
+.fc-direction-ltr .fc-button-group {
   border-radius: 0.25em;
   background-color: var(--fc-button-group-background-color);
 }
 /* Each item in the Button Group */
-.fc-button-group .fc-button.fc-button-primary {
+.fc .fc-button-group .fc-button.fc-button-primary {
   background-color: rgba(var(--fc-button-active-bg-color-rgb), 0);
   margin: 0.2em;
 
@@ -41,52 +55,66 @@
     color 0.2s ease, border-radius 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Hover */
-.fc .fc-button-primary:not(:disabled):hover {
-  background-color: rgb(var(--fc-button-active-bg-color-rgb), 1);
-  border-color: var(--fc-button-active-border-color);
-  color: var(--fc-button-active-text-color);
-  border-radius: 0.5em;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* Hover, Active, focus*/
+
+.fc {
+  & .fc-button-primary:not(:disabled) {
+    &:hover {
+      background-color: rgb(var(--fc-button-active-bg-color-rgb), 1);
+      border-color: var(--fc-button-active-border-color);
+      color: var(--fc-button-active-text-color);
+      border-radius: 0.5em;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    &.fc-button-active,
+    &:active {
+      background-color: var(--fc-button-active-bg-color);
+      border-color: var(--fc-button-active-border-color);
+      color: var(--fc-button-active-text-color);
+      border-radius: 0.5em;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    &.fc-button-active:focus,
+    &:active:focus {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Clear the defauld style */
+    }
+  }
 }
 
-/* Active button */
-.fc .fc-button-primary:not(:disabled).fc-button-active,
-.fc .fc-button-primary:not(:disabled):active {
-  background-color: var(--fc-button-active-bg-color);
-  border-color: var(--fc-button-active-border-color);
-  color: var(--fc-button-active-text-color);
-  border-radius: 0.5em;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+/* === Period selection button === */
+.fc {
+  & .fc-prev-button.fc-button-primary,
+  & .fc-next-button.fc-button-primary {
+    padding: 0.2em 0.2em;
+  }
 
-/* Focused active button  */
-.fc .fc-button-primary:not(:disabled).fc-button-active:focus,
-.fc .fc-button-primary:not(:disabled):active:focus {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-/* ==================================== */
+  & .fc-icon {
+    &.fc-icon-chevron-left,
+    &.fc-icon-chevron-right {
+      font-size: 1.4em;
+    }
+  }
 
-/* ===== Period selection button ===== */
-.fc .fc-prev-button.fc-button-primary,
-.fc .fc-next-button.fc-button-primary {
-  padding: 0.2em 0.2em;
-}
+  & .fc-today-button {
+    &.fc-button-primary {
+      color: var(--fc-button-text-color2);
+      padding: 0.2em 1.5em;
+      font-size: 1.1em;
+    }
+  }
 
-.fc .fc-icon.fc-icon-chevron-left,
-.fc .fc-icon.fc-icon-chevron-right {
-  font-size: 1.4em;
+  & .fc-prev-button.fc-button-primary,
+  & .fc-next-button.fc-button-primary,
+  & .fc-today-button.fc-button-primary {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+  }
 }
+/* =================== */
 
-.fc .fc-today-button.fc-button-primary {
-  color: var(--fc-button-text-color2);
-  padding: 0.2em 1.5em;
-  font-size: 1.1em;
+/* ===== Grid ===== */
+/* Calendar cell style */
+.fc .fc-daygrid-day-frame {
+  background-color: white;
 }
-
-.fc .fc-prev-button.fc-button-primary,
-.fc .fc-next-button.fc-button-primary,
-.fc .fc-today-button.fc-button-primary {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
-}
-/* =================================== */
