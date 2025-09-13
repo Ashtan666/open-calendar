@@ -2,40 +2,91 @@
   --fc-button-bg-color: #ededed;
   --fc-button-border-color: #ededed;
   --fc-button-text-color: #7b7b7b;
+  --fc-button-text-color2: #4f4f4f;
+  --fc-button-hover-border-color: transparent;
   --fc-button-active-bg-color: #ffffff;
+  --fc-button-active-bg-color-rgb: 256, 256, 256;
   --fc-button-active-border-color: transparent;
   --fc-button-active-text-color: #4f4f4f;
   --fc-button-group-background-color: #ededed;
 }
 
-.fc .fc-toolbar-title {
-  font-weight: bold;
-}
-
+/* Calendar cell style */
 .fc .fc-daygrid-day-frame {
   background-color: white;
 }
 
+/* Calendar Title */
+.fc .fc-toolbar-title {
+  font-weight: bold;
+}
+
+/* ===== Button Common ===== */
+/* Common style */
 .fc .fc-button {
   border-radius: 0.3em;
   padding: 0.2em 1em;
 }
-
+/* Button group */
 .fc-direction-ltr .fc-toolbar-chunk > .fc-button-group {
   border-radius: 0.25em;
   background-color: var(--fc-button-group-background-color);
 }
-
+/* Each item in the Button Group */
 .fc-button-group .fc-button.fc-button-primary {
-  background-color: transparent;
+  background-color: rgba(var(--fc-button-active-bg-color-rgb), 0);
   margin: 0.2em;
+
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    color 0.2s ease, border-radius 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* Hover */
+.fc .fc-button-primary:not(:disabled):hover {
+  background-color: rgb(var(--fc-button-active-bg-color-rgb), 1);
+  border-color: var(--fc-button-active-border-color);
+  color: var(--fc-button-active-text-color);
+  border-radius: 0.5em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Active button */
 .fc .fc-button-primary:not(:disabled).fc-button-active,
 .fc .fc-button-primary:not(:disabled):active {
   background-color: var(--fc-button-active-bg-color);
   border-color: var(--fc-button-active-border-color);
-  color: var(--fc-button-text-color);
+  color: var(--fc-button-active-text-color);
   border-radius: 0.5em;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+/* Focused active button  */
+.fc .fc-button-primary:not(:disabled).fc-button-active:focus,
+.fc .fc-button-primary:not(:disabled):active:focus {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+/* ==================================== */
+
+/* ===== Period selection button ===== */
+.fc .fc-prev-button.fc-button-primary,
+.fc .fc-next-button.fc-button-primary {
+  padding: 0.2em 0.2em;
+}
+
+.fc .fc-icon.fc-icon-chevron-left,
+.fc .fc-icon.fc-icon-chevron-right {
+  font-size: 1.4em;
+}
+
+.fc .fc-today-button.fc-button-primary {
+  color: var(--fc-button-text-color2);
+  padding: 0.2em 1.5em;
+  font-size: 1.1em;
+}
+
+.fc .fc-prev-button.fc-button-primary,
+.fc .fc-next-button.fc-button-primary,
+.fc .fc-today-button.fc-button-primary {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+}
+/* =================================== */
