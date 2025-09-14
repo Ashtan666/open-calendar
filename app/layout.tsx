@@ -28,7 +28,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <header className="text-gray-600 body-font border border-gray-200">
-          <div className="flex flex-wrap p-2 md:p-4 flex-col md:flex-row items-center bg-[url('./OpenCalendar.svg')] bg-[left_-3em_top_120%] md:bg-[left_-2em_top_50%] bg-[length:15em] md:bg-[length:20em] bg-no-repeat">
+          <div className="flex flex-wrap p-2 md:p-4 flex-col md:flex-row items-center bg-[url('../public/OpenCalendar.svg')] bg-[left_-3em_top_120%] md:bg-[left_-2em_top_50%] bg-[length:15em] md:bg-[length:20em] bg-no-repeat">
             <h1>
               <a className="flex title-font font-bold items-center text-gray-900 mb-2">
                 <span className="md:ml-3 text-2xl">OpenCalendar</span>
