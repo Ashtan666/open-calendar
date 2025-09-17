@@ -10,7 +10,9 @@ export default function Home() {
         <p>OpenCalendarは、ログイン不要ですぐに使えるカレンダーアプリ。</p>
         <p>自分の予定を気軽に追加・確認しましょう。</p>
       </div>
-      <Calendar />
+      <div id="Calendar">
+        <Calendar />
+      </div>
     </main>
   );
 }
