@@ -3,16 +3,19 @@
 import FullCalendar from "@fullcalendar/react";
 import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import events from "./events";
+import sampleEvents from "./events";
 import Popup from "../popup/PopupDialog";
 import { useState } from "react";
 import PopupDialog from "../popup/PopupDialog";
+import { EventSourceInput } from "@fullcalendar/core/index.js";
 
 export default function Calendar() {
+  const [events, setEvents] = useState<any[]>(sampleEvents);
   const [popup, setPopup] = useState<{
     right: string;
     left: string;
     y: string;
+    date: string[];
   } | null>(null);
 
   function handleDateClick(info: any) {
@@ -21,21 +24,40 @@ export default function Calendar() {
     const calendarRect = document
       .getElementById("Calendar")
       .getBoundingClientRect();
-
+    console.log(info.date, info.date.getMonth());
     if (popupRect.left < calendarRect.right / 2) {
       setPopup({
         right: "auto",
         left: popupRect.right - calendarRect.left + 5 + "px",
         y: popupRect.top - calendarRect.top + "px",
+        date: [
+          info.date.getFullYear().toString(),
+          (info.date.getMonth() + 1).toString().padStart(2, "0"),
+          info.date.getDate().toString().padStart(2, "0"),
+        ],
       });
     } else {
       setPopup({
         right: calendarRect.right - popupRect.left + 5 + "px",
         left: "auto",
         y: popupRect.top - calendarRect.top + "px",
+        date: [
+          info.date.getFullYear().toString(),
+          (info.date.getMonth() + 1).toString().padStart(2, "0"),
+          info.date.getDate().toString().padStart(2, "0"),
+        ],
       });
     }
   }
+
+  const handleSaveEvent = (
+    title: string,
+    date: string,
+    memo: string | null
+  ) => {
+    console.log("executed: handleSaveEvent");
+    setEvents((prev) => [...prev, { title: title, start: date }]);
+  };
 
   return (
     <div className="p-4 relative">
@@ -66,9 +88,11 @@ export default function Calendar() {
           right={popup.right}
           left={popup.left}
           y={popup.y}
+          date={popup.date}
           onClose={() => {
             setPopup(null);
           }}
+          onSave={handleSaveEvent}
         />
       )}
     </div>
