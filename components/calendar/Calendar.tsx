@@ -24,7 +24,6 @@ export default function Calendar() {
     const calendarRect = document
       .getElementById("Calendar")
       .getBoundingClientRect();
-    console.log(info.date, info.date.getMonth());
     if (popupRect.left < calendarRect.right / 2) {
       setPopup({
         right: "auto",

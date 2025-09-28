@@ -23,7 +23,6 @@ export default function PopupDialog({
 }: PopupProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const selectedDate = date[0] + "-" + date[1] + "-" + date[2];
-  console.log(selectedDate);
 
   useEffect(() => {
     if (dialogRef.current) {
@@ -104,15 +103,21 @@ export default function PopupDialog({
               date === "yyyy/mm/dd" ||
               date === ""
             ) {
-              console.log("No save data enterd");
-              console.log("title:", title, "\ndate:", date, "\nmemo:", memo);
+              console.log("No save data entered");
               return;
             }
 
             // call onSave to set events
-            console.log("taaaitle:", title, "\ndate:", date, "\nmemo:", memo);
-            console.log("before onSave");
             onSave(title, date, memo);
+            console.log(
+              "Save event is conplated.",
+              "\ntitle: ",
+              title,
+              "\ndate:",
+              date,
+              "\nmemo:",
+              memo
+            );
 
             // call onClose
             onClose;
