@@ -51,9 +51,10 @@ export default function RootLayout({
           </div>
         </header>
         {children}
-        <footer className="bg-blue-400 text-center py-8">
+        <footer className="bg-gray-50 h-2"></footer>
+        {/* <footer className="bg-blue-400 text-center py-8">
           <p>copyright</p>
-        </footer>
+        </footer> */}
       </body>
     </html>
   );
