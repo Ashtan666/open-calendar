@@ -52,10 +52,13 @@ export default function Calendar() {
   const handleSaveEvent = (
     title: string,
     date: string,
-    memo: string | null
+    description: string | null
   ) => {
     console.log("executed: handleSaveEvent");
-    setEvents((prev) => [...prev, { title: title, start: date }]);
+    setEvents((prev) => [
+      ...prev,
+      { title: title, start: date, description: description },
+    ]);
   };
 
   return (

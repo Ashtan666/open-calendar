@@ -10,7 +10,7 @@ interface PopupProps {
   y: string;
   date: string[];
   onClose: () => void;
-  onSave: (title: string, date: string, memo: string | null) => void;
+  onSave: (title: string, date: string, description: string | null) => void;
 }
 
 export default function PopupDialog({
@@ -77,8 +77,8 @@ export default function PopupDialog({
         className="w-full border rounded px-2 py-1 mb-2"
       /> */}
       <textarea
-        id="memo"
-        name="memo"
+        id="description"
+        name="description"
         placeholder="メモ"
         className="w-full border rounded px-2 py-1 mb-2"
       />
@@ -90,11 +90,11 @@ export default function PopupDialog({
           onClick={() => {
             // set values
             const dialogEl = dialogRef.current.querySelectorAll(
-              '[id="title"],[id="event-start"],[id="memo"]'
+              '[id="title"],[id="event-start"],[id="description"]'
             );
             const title = dialogEl.item(0).value; //event title
             const date = dialogEl.item(1).value; // event start date
-            const memo = dialogEl.item(2).value; // event memo
+            const description = dialogEl.item(2).value; // event description
 
             if (
               title === null ||
@@ -108,15 +108,15 @@ export default function PopupDialog({
             }
 
             // call onSave to set events
-            onSave(title, date, memo);
+            onSave(title, date, description);
             console.log(
               "Save event is conplated.",
               "\ntitle: ",
               title,
               "\ndate:",
               date,
-              "\nmemo:",
-              memo
+              "description:",
+              description
             );
 
             // call onClose
