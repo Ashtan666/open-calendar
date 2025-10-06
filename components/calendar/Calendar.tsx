@@ -8,6 +8,7 @@ import Popup from "../popup/PopupDialog";
 import { useState } from "react";
 import PopupDialog from "../popup/PopupDialog";
 import { EventSourceInput } from "@fullcalendar/core/index.js";
+import { CalendarEvent, saveEventToLocalStorage } from "@/utils/localStrage";
 
 export default function Calendar() {
   const [events, setEvents] = useState<any[]>(sampleEvents);
@@ -55,10 +56,15 @@ export default function Calendar() {
     description: string | null
   ) => {
     console.log("executed: handleSaveEvent");
-    setEvents((prev) => [
-      ...prev,
-      { title: title, start: date, description: description },
-    ]);
+
+    const newEvent: CalendarEvent = {
+      id: crypto.randomUUID(),
+      title: title,
+      date: date,
+      description: description ?? undefined,
+    };
+    setEvents((prev) => [...prev, newEvent]);
+    saveEventToLocalStorage(newEvent);
   };
 
   return (
@@ -80,7 +86,8 @@ export default function Calendar() {
         initialView="dayGridMonth"
         weekends={true}
         // events="https://fullcalendar.io/api/demo-feeds/events.json"
-        events={events}
+        //events={events}
+        events={events.map((e) => ({ title: e.title, start: e.date }))}
         // eventContent={renderEventContent}
         height="auto"
         dateClick={handleDateClick}
