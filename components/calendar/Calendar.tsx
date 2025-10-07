@@ -5,13 +5,19 @@ import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import sampleEvents from "./events";
 import Popup from "../popup/PopupDialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PopupDialog from "../popup/PopupDialog";
 import { EventSourceInput } from "@fullcalendar/core/index.js";
-import { CalendarEvent, saveEventToLocalStorage } from "@/utils/localStrage";
+import {
+  CalendarEvent,
+  getEventFromLocalStorage,
+  saveEventToLocalStorage,
+} from "@/utils/localStrage";
 
 export default function Calendar() {
-  const [events, setEvents] = useState<any[]>(sampleEvents);
+  // const [events, setEvents] = useState<any[]>(sampleEvents);
+  // const [events, setEvents] = useState<any[]>(getEventFromLocalStorage());
+  const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [popup, setPopup] = useState<{
     right: string;
     left: string;
@@ -66,6 +72,14 @@ export default function Calendar() {
     setEvents((prev) => [...prev, newEvent]);
     saveEventToLocalStorage(newEvent);
   };
+
+  useEffect(() => {
+    const storedEvents = getEventFromLocalStorage();
+    setEvents(storedEvents);
+    // Desplay dummy event
+    setEvents((prev) => [...prev.concat(sampleEvents)]);
+    console.log(events);
+  }, []);
 
   return (
     <div className="p-4 relative">
