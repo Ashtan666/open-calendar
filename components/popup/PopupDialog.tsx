@@ -1,14 +1,14 @@
 "use client";
 
-import { convertSegmentPathToStaticExportFilename } from "next/dist/shared/lib/segment-cache/segment-value-encoding";
+import { CalendarEvent, getEventFromLocalStorage } from "@/utils/localStrage";
 import { useEffect, useRef } from "react";
-import { start } from "repl";
 
 interface PopupProps {
   right: string;
   left: string;
   y: string;
-  date: string[];
+  startDate: string;
+  event?: CalendarEvent;
   onClose: () => void;
   onSave: (title: string, date: string, description: string | null) => void;
 }
@@ -17,12 +17,14 @@ export default function PopupDialog({
   right,
   left,
   y,
-  date,
+  startDate,
+  event,
   onClose,
   onSave,
 }: PopupProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const selectedDate = date[0] + "-" + date[1] + "-" + date[2];
+
+  const isEdit = event !== undefined;
 
   useEffect(() => {
     if (dialogRef.current) {
@@ -51,19 +53,20 @@ export default function PopupDialog({
       }}
       className={"rounded-xl px-5 py-6 shadow-2xl w-800 border m-0 bg-gray-50"}
     >
-      <h3 className="pb-3">予定を追加</h3>
+      <h3 className="pb-3">{isEdit ? "確認／編集" : "新規作成"}</h3>
       <input
         type="text"
         id="title"
         name="title"
         placeholder="タイトル"
+        defaultValue={isEdit ? event.title : ""}
         className="w-full border rounded px-2 py-1 mb-2"
       />
       <input
         type="date"
         id="event-start"
         name="event-start"
-        defaultValue={selectedDate}
+        defaultValue={isEdit ? event.startDate : startDate}
         min="1990-01-01"
         max="2100-12-31"
         className="w-full border rounded px-2 py-1 mb-2"
@@ -80,6 +83,7 @@ export default function PopupDialog({
         id="description"
         name="description"
         placeholder="メモ"
+        defaultValue={isEdit ? event.description : ""}
         className="w-full border rounded px-2 py-1 mb-2"
       />
       <div className="fles justify-end gap-2">
@@ -93,28 +97,28 @@ export default function PopupDialog({
               '[id="title"],[id="event-start"],[id="description"]'
             );
             const title = dialogEl.item(0).value; //event title
-            const date = dialogEl.item(1).value; // event start date
+            const startDate = dialogEl.item(1).value; // event start date
             const description = dialogEl.item(2).value; // event description
 
             if (
               title === null ||
               title?.trim() === "" ||
-              date === null ||
-              date === "yyyy/mm/dd" ||
-              date === ""
+              startDate === null ||
+              startDate === "yyyy/mm/dd" ||
+              startDate === ""
             ) {
               console.log("No save data entered");
               return;
             }
 
             // call onSave to set events
-            onSave(title, date, description);
+            onSave(title, startDate, description);
             console.log(
               "Save event is conplated.",
               "\ntitle: ",
               title,
-              "\ndate:",
-              date,
+              "\nstartDate:",
+              startDate,
               "description:",
               description
             );

@@ -4,7 +4,8 @@ const STORAGE_KEY = "open-calendar-events";
 export interface CalendarEvent {
   id: string;
   title: string;
-  date: string;
+  startDate: string;
+  //endDate: string;
   description?: string;
 }
 
@@ -25,6 +26,7 @@ export function getEventFromLocalStorage(): CalendarEvent[] {
 // --- Delete ---
 export function deleteEventFromLocalStorage(id: string) {
   const existing = getEventFromLocalStorage();
+  // find or filter
   const updated = existing.filter((e) => e.id !== id);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
 }
