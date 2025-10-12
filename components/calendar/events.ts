@@ -44,7 +44,7 @@ const events: CalendarEvent[] = [
     // date: new Date().toString(),
     // date: "2025-10-07",
     // sv-SE locale returns a date stirng in the format YYYY-MM-DD
-    date: new Date().toLocaleDateString("sv-SE"),
+    startDate: new Date().toLocaleDateString("sv-SE"),
     description: "Description of Sample1",
   },
   {
@@ -53,9 +53,11 @@ const events: CalendarEvent[] = [
     // date: new Date().toString(),
     // date: "2025-10-07",
     // sv-SE locale returns a date stirng in the format YYYY-MM-DD
-    date: new Date(date.year, date.month - 1, date.day + 3).toLocaleDateString(
-      "sv-SE"
-    ),
+    startDate: new Date(
+      date.year,
+      date.month - 1,
+      date.day + 3
+    ).toLocaleDateString("sv-SE"),
     description: "Description of Sample1",
   },
 ];
