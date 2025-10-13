@@ -16,6 +16,14 @@ export function saveEventToLocalStorage(event: CalendarEvent) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
 }
 
+// --- Update ---
+
+export function updateEventToLocalStorage(event: CalendarEvent) {
+  const existing = getEventFromLocalStorage();
+  const updated = existing.map((e) => (e.id === event.id ? event : e));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+}
+
 // --- Read ---
 export function getEventFromLocalStorage(): CalendarEvent[] {
   if (typeof window === "undefined") return [];
