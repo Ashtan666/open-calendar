@@ -11,6 +11,7 @@ import {
   CalendarEvent,
   getEventFromLocalStorage,
   saveEventToLocalStorage,
+  updateEventToLocalStorage,
 } from "@/utils/localStrage";
 
 export default function Calendar() {
@@ -90,18 +91,26 @@ export default function Calendar() {
   const handleSaveEvent = (
     title: string,
     startDate: string,
-    description: string | null
+    description?: string,
+    id?: string
   ) => {
-    console.log("executed: handleSaveEvent");
-
-    const newEvent: CalendarEvent = {
-      id: crypto.randomUUID(),
-      title: title,
-      startDate: startDate,
-      description: description ?? undefined,
-    };
-    setEvents((prev) => [...prev, newEvent]);
-    saveEventToLocalStorage(newEvent);
+    console.log("executing: handleSaveEvent");
+    if (id) {
+      // Edit
+      const updatedEvent: CalendarEvent = { id, title, startDate, description };
+      setEvents((prev) => prev.map((e) => (e.id === id ? updatedEvent : e)));
+      updateEventToLocalStorage(updatedEvent);
+    } else {
+      // Create new
+      const newEvent: CalendarEvent = {
+        id: crypto.randomUUID(),
+        title: title,
+        startDate: startDate,
+        description: description ?? undefined,
+      };
+      setEvents((prev) => [...prev, newEvent]);
+      saveEventToLocalStorage(newEvent);
+    }
   };
 
   useEffect(() => {

@@ -10,7 +10,12 @@ interface PopupProps {
   startDate: string;
   event?: CalendarEvent;
   onClose: () => void;
-  onSave: (title: string, date: string, description: string | null) => void;
+  onSave: (
+    title: string,
+    date: string,
+    description?: string,
+    id?: string
+  ) => void;
 }
 
 export default function PopupDialog({
@@ -40,6 +45,30 @@ export default function PopupDialog({
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, [onClose]);
+
+  const handleSave = () => {
+    // set values
+    console.log(dialogRef.current);
+    const [titleEl, startDateEl, descEl] =
+      dialogRef.current.querySelectorAll<HTMLInputElement>(
+        '[id="title"],[id="event-start"],[id="description"]'
+      );
+    const title = titleEl.value.trim(); //event title
+    const startDate = startDateEl.value; // event start date
+    const description = descEl.value; // event description
+
+    if (!title || !startDate) {
+      console.warn("Invalid input: Missing title or date");
+      return;
+    }
+
+    // call onSave to set events
+    onSave(title, startDate, description, event?.id);
+    console.log("✅ Event saved:", { title, startDate, description });
+
+    // call onClose
+    onClose();
+  };
 
   return (
     <dialog
@@ -91,41 +120,7 @@ export default function PopupDialog({
           キャンセル
         </button>
         <button
-          onClick={() => {
-            // set values
-            const dialogEl = dialogRef.current.querySelectorAll(
-              '[id="title"],[id="event-start"],[id="description"]'
-            );
-            const title = dialogEl.item(0).value; //event title
-            const startDate = dialogEl.item(1).value; // event start date
-            const description = dialogEl.item(2).value; // event description
-
-            if (
-              title === null ||
-              title?.trim() === "" ||
-              startDate === null ||
-              startDate === "yyyy/mm/dd" ||
-              startDate === ""
-            ) {
-              console.log("No save data entered");
-              return;
-            }
-
-            // call onSave to set events
-            onSave(title, startDate, description);
-            console.log(
-              "Save event is conplated.",
-              "\ntitle: ",
-              title,
-              "\nstartDate:",
-              startDate,
-              "description:",
-              description
-            );
-
-            // call onClose
-            onClose();
-          }}
+          onClick={handleSave}
           className="px-3 py-1 bg-blue-500 text-white rounded"
         >
           保存
