@@ -16,6 +16,7 @@ interface PopupProps {
     description?: string,
     id?: string
   ) => void;
+  onDelete: (id: string) => void;
 }
 
 export default function PopupDialog({
@@ -26,6 +27,7 @@ export default function PopupDialog({
   event,
   onClose,
   onSave,
+  onDelete,
 }: PopupProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -47,6 +49,8 @@ export default function PopupDialog({
   }, [onClose]);
 
   const handleSave = () => {
+    if (!dialogRef?.current) return;
+
     // set values
     console.log(dialogRef.current);
     const [titleEl, startDateEl, descEl] =
@@ -67,6 +71,12 @@ export default function PopupDialog({
     console.log("✅ Event saved:", { title, startDate, description });
 
     // call onClose
+    onClose();
+  };
+
+  const handleDelete = () => {
+    if (!event?.id) return;
+    onDelete(event.id);
     onClose();
   };
 
@@ -117,7 +127,10 @@ export default function PopupDialog({
       />
       <div className="flex justify-end gap-2">
         {isEdit ? (
-          <button className="mr-auto px-3 py-1 rounded text-red-600 bg-red-50 border border-red-300 ">
+          <button
+            onClick={handleDelete}
+            className="mr-auto px-3 py-1 rounded text-red-600 bg-red-50 border border-red-300 "
+          >
             削除
           </button>
         ) : undefined}
