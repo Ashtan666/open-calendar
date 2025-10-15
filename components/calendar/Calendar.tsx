@@ -6,9 +6,9 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import sampleEvents from "./events";
 import { useEffect, useState } from "react";
 import PopupDialog from "../popup/PopupDialog";
-import { EventSourceInput } from "@fullcalendar/core/index.js";
 import {
   CalendarEvent,
+  deleteEventFromLocalStorage,
   getEventFromLocalStorage,
   saveEventToLocalStorage,
   updateEventToLocalStorage,
@@ -31,7 +31,8 @@ export default function Calendar() {
     const popupRect = info.dayEl.getBoundingClientRect();
     const calendarRect = document
       .getElementById("Calendar")
-      .getBoundingClientRect();
+      ?.getBoundingClientRect();
+    if (!calendarRect) return;
 
     if (popupRect.left < calendarRect.right / 2) {
       setPopup({
@@ -52,10 +53,11 @@ export default function Calendar() {
 
   function handleEventClick(info: any) {
     // set display position
-    const popupRect = info.el.getBoundingClientRect();
+    const popupRect = info.dayEl.getBoundingClientRect();
     const calendarRect = document
       .getElementById("Calendar")
-      .getBoundingClientRect();
+      ?.getBoundingClientRect();
+    if (!calendarRect) return;
 
     console.log(info.event);
 
@@ -113,6 +115,11 @@ export default function Calendar() {
     }
   };
 
+  const handleDeleteEvent = (id: string) => {
+    setEvents((prev) => prev.filter((e) => e.id !== id));
+    deleteEventFromLocalStorage(id);
+  };
+
   useEffect(() => {
     const storedEvents = getEventFromLocalStorage();
     setEvents(storedEvents);
@@ -162,18 +169,9 @@ export default function Calendar() {
             setPopup(null);
           }}
           onSave={handleSaveEvent}
+          onDelete={handleDeleteEvent}
         />
       )}
     </div>
-  );
-}
-
-// a custom render function
-function renderEventContent(eventInfo) {
-  return (
-    <>
-      <b>{eventInfo.timeText}</b>
-      <i>{eventInfo.event.title} </i>
-    </>
   );
 }
