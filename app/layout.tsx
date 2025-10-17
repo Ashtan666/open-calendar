@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ComingSoonButton } from "@/components/ComingSoonButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,19 +35,21 @@ export default function RootLayout({
                 <span className="md:ml-3 text-2xl">OpenCalendar</span>
               </a>
             </h1>
-            <nav className="md:ml-auto my-0 flex flex-wrap items-coenter text-base justify-center">
-              <ul className="flex font-bold">
-                <li className="mr-10">
-                  <a href="" className="b hover:text-gray-900">
-                    ログイン
-                  </a>
-                </li>
-                <li className="mr-0 md:mr-10">
-                  <a href="" className="hover:text-gray-900">
-                    設定
-                  </a>
-                </li>
-              </ul>
+            <nav className="md:ml-auto my-0 mr-7 text-base ">
+              <ComingSoonButton>
+                <ul className="flex flex-wrap space-x-7 font-bold">
+                  <li className="">
+                    <a href="" className="b hover:text-gray-900 py-2 px-1">
+                      ログイン
+                    </a>
+                  </li>
+                  <li className="">
+                    <a href="" className="hover:text-gray-900 py-2 px-1">
+                      設定
+                    </a>
+                  </li>
+                </ul>
+              </ComingSoonButton>
             </nav>
           </div>
         </header>
