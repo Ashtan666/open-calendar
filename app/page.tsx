@@ -1,3 +1,4 @@
+import { ComingSoonButton } from "@/components/ComingSoonButton";
 import Calendar from "../components/calendar/Calendar";
 
 export default function Home() {
