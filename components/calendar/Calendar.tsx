@@ -51,7 +51,7 @@ export default function Calendar() {
 
   function handleEventClick(info: any) {
     // set display position
-    const popupRect = info.dayEl.getBoundingClientRect();
+    const popupRect = info.el.getBoundingClientRect();
     const calendarRect = document
       .getElementById("Calendar")
       ?.getBoundingClientRect();
