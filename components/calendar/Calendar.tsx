@@ -4,7 +4,7 @@ import FullCalendar from "@fullcalendar/react";
 import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import sampleEvents from "./events";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PopupDialog from "../popup/PopupDialog";
 import {
   CalendarEvent,
@@ -15,8 +15,7 @@ import {
 } from "@/utils/localStrage";
 
 export default function Calendar() {
-  // const [events, setEvents] = useState<any[]>(sampleEvents);
-  // const [events, setEvents] = useState<any[]>(getEventFromLocalStorage());
+  const calendarRef = useRef<HTMLDivElement | null>(null);
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [popup, setPopup] = useState<{
     right: string;
@@ -125,10 +124,47 @@ export default function Calendar() {
     setEvents(storedEvents);
     // Desplay dummy event
     setEvents((prev) => [...prev.concat(sampleEvents)]);
+
+    setTimeout(() => {
+      const dayViewBtn = calendarRef.current?.querySelector(
+        '[title="Day view"]'
+      ) as HTMLButtonElement | null;
+      const weekViewBtn = calendarRef.current?.querySelector(
+        '[title="Week view"]'
+      ) as HTMLButtonElement | null;
+      const yearViewBtn = calendarRef.current?.querySelector(
+        '[title="Year view"]'
+      ) as HTMLButtonElement | null;
+      const targetButtons = [dayViewBtn, weekViewBtn, yearViewBtn];
+
+      targetButtons.forEach((btn) => {
+        if (!btn) return;
+
+        // ボタンの親を relative に
+        const wrapper = document.createElement("div");
+        wrapper.className = "relative pointer-events-none opacity-80";
+        btn.parentNode?.insertBefore(wrapper, btn);
+        wrapper.appendChild(btn);
+
+        const wrapper2 = document.createElement("div");
+        wrapper2.className = "blur-[1px] select-none";
+        btn.parentNode?.insertBefore(wrapper2, btn);
+        wrapper2.appendChild(btn);
+
+        // overlay作成
+        const overlay = document.createElement("div");
+        overlay.className =
+          "rounded absolute inset-0 bg-blue-50/70 backdrop-blur-sm pr-2 border-2 border-indigo-300";
+        overlay.innerHTML =
+          '<span class="text text-gray-700 flex items-center gap-1">🧩</span>';
+
+        wrapper.appendChild(overlay);
+      });
+    }, 100); // 100msほど待つことでレンダリング後に確実に取得
   }, []);
 
   return (
-    <div className="p-4 relative">
+    <div ref={calendarRef} className="p-4 relative">
       <FullCalendar
         headerToolbar={{
           left: "title",
